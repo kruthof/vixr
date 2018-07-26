@@ -1,12 +1,14 @@
-
-#' Helper Function that allows the conversion of date variables, often find in quote tables from data providers. i.e.when  'quote_datetime' the form 
-#' of 'YYYY-MM-DD HH:MM:SS' 
+#' Helper Function that allows the conversion of date variables, often find in
+#' quote tables from data providers. i.e.when  'quote_datetime' the form of
+#' 'YYYY-MM-DD HH:MM:SS'
 #'
-#' @param data Dataframe incl. variables 'expiration' and 'quote_datetime'. 'dmY==TRUE' should be used if data is int the format of d-m-Y.  
+#' @param data Dataframe incl. variables 'expiration' and 'quote_datetime'.
+#'   'dmY==TRUE' should be used if data is int the format of d-m-Y.
 #'
-#' @return Dataframe with new variables 'QuoteTime' (indicating minutes from midnight until quote) and 'QuoteDate'
-#' @export
-#'
+#' @return Dataframe with new variables 'QuoteTime' (indicating minutes from
+#'   midnight until quote) and 'QuoteDate'
+#' @seealso \code{\link{letVixShiny}},\code{\link{vic_cal}}
+#' @importFrom reshape2 "colsplit"
 #' @examples convert_data(data,dmY=TRUE) 
 convert_data = function(Data, dmY=FALSE){    
 

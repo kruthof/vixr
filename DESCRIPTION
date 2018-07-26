@@ -12,4 +12,6 @@ Imports: forecast,
     dygraphs,
     shiny,
     ggplot2,
-    stats
+    stats,
+    reshape2
+RoxygenNote: 6.0.1

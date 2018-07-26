@@ -1,34 +1,16 @@
-#setting working directory
-
-# #importing helper functions and shinyapp
-# source("R/helper.R")
-# source("R/app.R")
-#
-#
-# #loading required liibraries
-require(reshape2)
-require(forecast)
-require(dygraphs)
-require(shiny)
-
-
-#source = "UnderlyingOptionsIntervalsQuotes_900sec_2016-06-01.csv"
-#source = "UnderlyingOptionsIntervalsCalcs_60sec_2018-01-05.csv"
-#loading data, only variable: Symbol, quote_datetime, expiration, strike, option, ask and bid
-
-#' Title
+#' Vix_Calc: Calculating volatility index quotes
 #'
 #' @param source Dataframe incl. 'QuoteDate' (format:YYYY-MM-DD), 'QuoteTime' (format:hh:mm:ss), 'expiration' (format:YYYY-MM-DD), 'option_type' ('C' for call or 
 #' 'P' for put), 'bid', 'ask','active_underlaying_price' (S&P 500 spot prices),'underlying symbol' with '^SPX' representing the S&P500 symbol
-
-#' @param nearT Defining the near term (e.g. 28) 
-#' @param nextT Defining the next term (e.g. 35)
-#' @param rf_near Defining risk free rate for near term (eg. 0.002)
-#' @param rf_next Defining risk free rate for next term (eg. 0.002)
+#' @param nearT Defining the near term 
+#' @param nextT Defining the next term 
+#' @param rf_near Defining risk free rate for near term 
+#' @param rf_next Defining risk free rate for next term 
+#' @export
+#' @seealso \code{\link{letVixShiny}},\code{\link{convert_date}}
 #' @param minutes How often the VIX shall be calculated within the given day (default = once each minute), min=1
 #'
-#' @return
-#' @export
+#' @return A vector of VIX quptes
 #'
 #' @examples vix_calc(source=data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
 #' 
