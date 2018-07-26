@@ -6,7 +6,8 @@
 #                          -  Function that visualizes vix using Shiny  -
 #______________________________________________________________________________________
 #______________________________________________________________________________________
-
+require(dygraphs)
+require(shiny)
 letVixShiny = function(vix) {
 
   shinyApp(ui = ui, server = server)

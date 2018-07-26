@@ -16,9 +16,24 @@ require(shiny)
 #source = "UnderlyingOptionsIntervalsCalcs_60sec_2018-01-05.csv"
 #loading data, only variable: Symbol, quote_datetime, expiration, strike, option, ask and bid
 
-vix_calc = function(source,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35, minutes=405) {
+#' Title
+#'
+#' @param source Dataframe incl. 'QuoteDate' (format:YYYY-MM-DD), 'QuoteTime' (format:hh:mm:ss), 'expiration' (format:YYYY-MM-DD), 'option_type' ('C' for call or 
+#' 'P' for put), 'bid', 'ask','active_underlaying_price' (S&P 500 spot prices),'underlying symbol' with '^SPX' representing the S&P500 symbol
 
-  Data =read.csv(file=source,header = TRUE, sep = ",")
+#' @param nearT Defining the near term (e.g. 28) 
+#' @param nextT Defining the next term (e.g. 35)
+#' @param rf_near Defining risk free rate for near term (eg. 0.002)
+#' @param rf_next Defining risk free rate for next term (eg. 0.002)
+#' @param minutes How often the VIX shall be calculated within the given day (default = once each minute), min=1
+#'
+#' @return
+#' @export
+#'
+#' @examples vix_calc(source=data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
+#' 
+vix_calc = function(Data,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) {
+
 
   #subsetting data. Only observations of SPX
   tmpC = Data[(Data$option_type=='C') & (Data$underlying_symbol=='^SPX'),]
@@ -31,33 +46,6 @@ vix_calc = function(source,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28,
                   "bid_call" = tmpC$bid,"ask_call" = tmpC$ask ,"bid_put" = tmpP$bid,"ask_put"=tmpP$ask,
                   "call_minus_put_ask" = tmpC$bid - tmpP$bid, "sandp_bid" = tmpP$active_underlying_price)
 
-
-  #converting variables to type "Date"
-
-
-
-  #check if date format equals d.m.y (as provided by user)
-  if (dmY == TRUE) {
-    as.Date(x=Data$expiration, format, tryFormats = c("%d-%m-%Y", "%d/%m/%Y","%d.%m.%Y"))
-    tmp_DateTime_split = colsplit(gsub("([^ ])([ ])", "\\1\\ \\2", Data$quote_datetime),
-                                "\\s", c("QuoteDate", "QuoteTime"))
-
-    Data$QuoteTime = strtoi(as.difftime(tmp_DateTime_split$QuoteTime, format = "%H:%M", units = "mins"))
-    Data$QuoteDate = as.Date(tmp_DateTime_split$QuoteDate, format="%d.%m.%Y")
-  } else { Data$expiration  = as.Date(Data$expiration)
-
-
-        #Split variable "quote_datetime into two seperate variables
-        tmp_DateTime_split = colsplit(gsub("([^ ])([ ])", "\\1\\.\\2", Data$quote_datetime),
-         "\\.", c("QuoteDate", "QuoteTime"))
-
-
-
-        #converting QuoteTime into minutes from midnight
-        Data$QuoteTime = strtoi(as.difftime(tmp_DateTime_split$QuoteTime, format = "%H:%M:%S", units = "mins"))
-        #converting QuoteData to type Date
-        Data$QuoteDate = as.Date(tmp_DateTime_split$QuoteDate)
-      }
 
 
   Data$days_to_expire = as.numeric(Data$expiration - Data$QuoteDate)
@@ -76,7 +64,7 @@ vix_calc = function(source,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28,
   #initialise vix vector
   vix = c()
   # #looping through each minute of the trading day
-  for (i in 1:minutes){
+  for (i in 1:405){
 
     #set tmp1 (tmp2) as the subset for the repsective minute of the trading day
     tmp1= nearTerm[nearTerm$QuoteTime==(min(nearTerm$QuoteTime)+i-1),]
@@ -175,7 +163,7 @@ vix_calc = function(source,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28,
   }
   #return dataframe with trading times and vix, of class vixr
 
-  results = data.frame('Time' = m2h(seq(1:minutes)+570), 'VIX' = vix)
+  results = data.frame('Time' = m2h(seq(1:405)+570), 'VIX' = vix)
   class(results) = "vixr"
   return(results)
 

@@ -1,11 +1,15 @@
 Package: vixr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Replication of intrada VIX quotes
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Garvin","Kruthof", email = "garvin.krutof@ucdconnect.ie", role =
+    c("aut", "cre"))
+Description: Repllication of the intraday volatility index using S&P 500 option and spot prices.
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+Imports: forecast,
+    dygraphs,
+    shiny,
+    ggplot2,
+    stats
