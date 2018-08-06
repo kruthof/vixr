@@ -14,7 +14,7 @@ convert_data = function(Data, dmY=FALSE){
 
   #check if date format equals d.m.y (as provided by user)
   if (dmY == TRUE) {
-    as.Date(x=Data$expiration, format, tryFormats = c("%d-%m-%Y", "%d/%m/%Y","%d.%m.%Y"))
+    as.Date(Data$expiration, format, tryFormats = c("%d-%m-%Y", "%d/%m/%Y","%d.%m.%Y"))
     tmp_DateTime_split = colsplit(gsub("([^ ])([ ])", "\\1\\ \\2", Data$quote_datetime),
                                 "\\s", c("QuoteDate", "QuoteTime"))
   
@@ -34,5 +34,6 @@ convert_data = function(Data, dmY=FALSE){
   #converting QuoteData to type Date
   Data$QuoteDate = as.Date(tmp_DateTime_split$QuoteDate)
   }
-  return(data)
+  return(Data)
 }
+

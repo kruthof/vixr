@@ -7,7 +7,7 @@
 letVixShiny(vix)
 }
 \arguments{
-\item{vix}{Vector containing vix qotes (i.e. output of vic_calc)}
+\item{vix}{An object of data type VIX, containing vix qotes (i.e. output of vic_calc)}
 }
 \value{
 Siny App
@@ -19,5 +19,5 @@ Create a shiny app for the VIX data
 letVixShiny(vix)
 }
 \seealso{
-\code{\link{vic_calc}},\code{\link{convert_date}}
+\code{\link{vic_calc}}, \code{\link{convert_date}}
 }

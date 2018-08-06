@@ -12,7 +12,7 @@
 #'
 #' @return A vector of VIX quptes
 #'
-#' @examples vix_calc(source=data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
+#' @examples vix_calc(data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
 #' 
 vix_calc = function(Data,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) {
 
@@ -24,9 +24,9 @@ vix_calc = function(Data,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, n
 
   #overwriting Data with dataframe consisting of all infos og tmpC + ask and bid price for the put with same
   #quote and expiration time
-  Data = data.frame("quote_datetime"=tmpC$quote_datetime,"expiration"=tmpC$expiration,"strike" = tmpC$strike,
+  Data = data.frame("quote_datetime"=tmpC$quote_datetime,"expiration"=as.Date(tmpC$expiration),"strike" = tmpC$strike,
                   "bid_call" = tmpC$bid,"ask_call" = tmpC$ask ,"bid_put" = tmpP$bid,"ask_put"=tmpP$ask,
-                  "call_minus_put_ask" = tmpC$bid - tmpP$bid, "sandp_bid" = tmpP$active_underlying_price)
+                  "call_minus_put_ask" = tmpC$bid - tmpP$bid, "sandp_bid" = tmpP$active_underlying_price,"QuoteDate"=as.Date(tmpC$QuoteDate),"QuoteTime"=tmpC$QuoteTime)
 
 
 

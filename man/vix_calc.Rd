@@ -8,13 +8,13 @@ vix_calc(Data, rf_near = 0.002, rf_next = 0.002, dmY = FALSE,
   nearT = 28, nextT = 35)
 }
 \arguments{
-\item{rf_near}{Defining risk free rate for near term (eg. 0.002)}
+\item{rf_near}{Defining risk free rate for near term}
 
-\item{rf_next}{Defining risk free rate for next term (eg. 0.002)}
+\item{rf_next}{Defining risk free rate for next term}
 
-\item{nearT}{Defining the near term (e.g. 28)}
+\item{nearT}{Defining the near term}
 
-\item{nextT}{Defining the next term (e.g. 35)}
+\item{nextT}{Defining the next term}
 
 \item{source}{Dataframe incl. 'QuoteDate' (format:YYYY-MM-DD), 'QuoteTime' (format:hh:mm:ss), 'expiration' (format:YYYY-MM-DD), 'option_type' ('C' for call or 
 'P' for put), 'bid', 'ask','active_underlaying_price' (S&P 500 spot prices),'underlying symbol' with '^SPX' representing the S&P500 symbol}
@@ -28,7 +28,7 @@ A vector of VIX quptes
 Vix_Calc: Calculating volatility index quotes
 }
 \examples{
-vix_calc(source=data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
+vix_calc(data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
 
 }
 \seealso{
