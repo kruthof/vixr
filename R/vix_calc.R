@@ -1,20 +1,18 @@
 #' Vix_Calc: Calculating volatility index quotes
 #'
-#' @param source Dataframe incl. 'QuoteDate' (format:YYYY-MM-DD), 'QuoteTime' (format:hh:mm:ss), 'expiration' (format:YYYY-MM-DD), 'option_type' ('C' for call or 
+#' @param Data Dataframe incl. 'QuoteDate' (format:YYYY-MM-DD), 'QuoteTime' (format:hh:mm:ss), 'expiration' (format:YYYY-MM-DD), 'option_type' ('C' for call or 
 #' 'P' for put), 'bid', 'ask','active_underlaying_price' (S&P 500 spot prices),'underlying symbol' with '^SPX' representing the S&P500 symbol
 #' @param nearT Defining the near term 
 #' @param nextT Defining the next term 
 #' @param rf_near Defining risk free rate for near term 
 #' @param rf_next Defining risk free rate for next term 
 #' @export
-#' @seealso \code{\link{letVixShiny}},\code{\link{convert_date}}
-#' @param minutes How often the VIX shall be calculated within the given day (default = once each minute), min=1
-#'
+#' @seealso \code{\link{letVixShiny}, \link{fitVIX}}
 #' @return A vector of VIX quptes
 #'
-#' @examples vix_calc(data, rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) 
+#' @examples vix_calc(VIX_SampleData, rf_near = 0.002,rf_next = 0.002, nearT=28, nextT=35) 
 #' 
-vix_calc = function(Data,rf_near = 0.002,rf_next = 0.002, dmY=FALSE, nearT=28, nextT=35) {
+vix_calc = function(Data,rf_near = 0.002,rf_next = 0.002, nearT=28, nextT=35) {
 
 
   #subsetting data. Only observations of SPX

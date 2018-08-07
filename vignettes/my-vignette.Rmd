@@ -1,0 +1,27 @@
+---
+title: "vixr Package"
+author: "Garvin Kruthof"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The objective of the the vixr package is the replication of the volatility index (VIX). Thereby, it features four primary functions
+  vix_calc: This function takes as an input 
+  fitVIX
+```{r}
+library(vixr)
+SampleData <- data.frame('VIX' = runif(450, 9, 9.7))
+fitVIX(SampleData, fit_type = 'smooth.spline')
+
+```{r}

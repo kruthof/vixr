@@ -1,0 +1,38 @@
+#' S&P 500 INTRADAY DATA 
+#'
+#' A dataset containing intraday S&P 500 spot and option prices
+#' diamonds.
+#'
+#' @format A data frame with 85560  rows and 28 variables:
+#' \describe{
+#'   \item{underlying_symbol}{Ticker Symbol}
+#'   \item{quote_datetime}{Day and time of the quote}
+#'   \item{root}{root}
+#'   \item{expiration}{Expiration date of the option}
+#'   \item{strike}{Strike price}
+#'   \item{option_type}{Type of the option, i.e. call or put}
+#'   \item{open}{First open price}
+#'   \item{high}{Highest price}
+#'   \item{low}{Lowest price}
+#'   \item{close}{Last price of the day}
+#'   \item{trade_volume}{Trade volume}
+#'   \item{bid_size}{Bid size}
+#'   \item{bid}{Bid price}
+#'   \item{ask_size}{Ask size}
+#'   \item{ask}{Ask price}
+#'   \item{underlying_bid}{Bid of the underlying}
+#'   \item{underlying_ask}{Ask of the underlying}
+#'   \item{implied_underlying_price}{Implied underlying price}
+#'   \item{active_underlying_price}{Active underlying price}
+#'   \item{implied_volatility}{Implied volatility}
+#'   \item{delta}{Delta}
+#'   \item{gamma}{Gamma}
+#'   \item{theta}{Theta}
+#'   \item{vega}{ Vega}
+#'   \item{rho}{Rho}
+#'   \item{QuoteTime}{Time of the quote}
+#'   \item{QuoteDate}{Date of the quote}
+#'    \item{X}{index}
+#'   ...
+#' }
+"VIX_SampleData"

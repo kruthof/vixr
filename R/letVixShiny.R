@@ -4,12 +4,29 @@
 #' @import dygraphs
 #' @import shiny
 #' @importFrom forecast "ma"
+#' @importFrom("stats", "as.ts")
 #' @return Siny App
 #' @export
-#'@seealso \code{\link{vic_calc}}, \code{\link{convert_date}}
-#' @examples letVixShiny(vix)
+#' @seealso \code{\link{vix_calc}, \link{fitVIX}}
+#' @examples 
+#' \dontrun{
+#' vix <- data.frame('VIX' = runif(450, 9, 9.7))
+#' letVixShiny(vix)
+#'  }
 letVixShiny = function(vix) {
   vix2shiny <<- vix
+
   shinyApp(ui = ui, server = server)
 
 }
+# 
+# letVixShiny  <- function(vix) {
+#   vix2shiny <<- vix
+#   appDir <- system.file("shiny-examples","myapp", package = "vixr")
+#   if (appDir == "") {
+#     stop("Could not find example directory. Try re-installing `vixr`.", call. = FALSE)
+#   }
+#   
+#   shiny::runApp(appDir, display.mode = "normal")
+#   return(NULL)
+# }
