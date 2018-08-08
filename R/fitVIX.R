@@ -6,7 +6,7 @@
 #' @return Returns a list of class fitVIX which includes the model details as well as fit type used
 #' @export
 #' @importFrom stats "lm" "loess" "smooth.spline" "na.omit" "predict"
-#' @seealso \code{\link{letVixShiny}, \link{vix_calc}}
+#' @seealso \code{\link{letVixShiny}, \link{vix_calc},\link{plotvix}}
 #' @examples SampleData <- data.frame('VIX' = runif(450, 9, 9.7))
 #' fitVIX(SampleData, fit_type = 'smooth.spline')
 #' 

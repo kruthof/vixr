@@ -22,5 +22,5 @@ letVixShiny(vix)
  }
 }
 \seealso{
-\code{\link{vix_calc}, \link{fitVIX}}
+\code{\link{vix_calc}, \link{fitVIX},\link{plotvix}}
 }

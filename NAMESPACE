@@ -2,10 +2,13 @@
 
 export(fitVIX)
 export(letVixShiny)
+export(plotvix)
 export(vix_calc)
 import(dygraphs)
+import(ggplot2)
 import(shiny)
 importFrom(forecast,"ma")
+importFrom(stats,"as.ts")
 importFrom(stats,"lm")
 importFrom(stats,"loess")
 importFrom(stats,"na.omit")

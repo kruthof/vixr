@@ -29,5 +29,5 @@ vix_calc(VIX_SampleData, rf_near = 0.002,rf_next = 0.002, nearT=28, nextT=35)
 
 }
 \seealso{
-\code{\link{letVixShiny}, \link{fitVIX}}
+\code{\link{letVixShiny}, \link{fitVIX},\link{plotvix}}
 }

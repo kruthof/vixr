@@ -4,10 +4,10 @@
 #' @import dygraphs
 #' @import shiny
 #' @importFrom forecast "ma"
-#' @importFrom("stats", "as.ts")
+#' @importFrom stats "as.ts"
 #' @return Siny App
 #' @export
-#' @seealso \code{\link{vix_calc}, \link{fitVIX}}
+#' @seealso \code{\link{vix_calc}, \link{fitVIX},\link{plotvix}}
 #' @examples 
 #' \dontrun{
 #' vix <- data.frame('VIX' = runif(450, 9, 9.7))

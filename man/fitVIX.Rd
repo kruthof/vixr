@@ -23,5 +23,5 @@ fitVIX(SampleData, fit_type = 'smooth.spline')
 
 }
 \seealso{
-\code{\link{letVixShiny}, \link{vix_calc}}
+\code{\link{letVixShiny}, \link{vix_calc},\link{plotvix}}
 }
