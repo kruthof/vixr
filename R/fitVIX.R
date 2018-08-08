@@ -13,8 +13,8 @@
 fitVIX  = function(Data,  fit_type = c('lm', 'loess', 'smooth.spline')) {
   x = seq(1:length(Data$VIX))
   # Find what type of fitting method
-  #fit_arg = match.arg(fit_type)
-  fit_arg=fit_type
+  fit_arg = match.arg(fit_type)
+  #fit_arg=fit_type
   # Fit some models
   if(fit_arg == 'lm') {
     mod = lm(Data$VIX ~ x)
