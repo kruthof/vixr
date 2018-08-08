@@ -14,7 +14,7 @@
 #' letVixShiny(vix)
 #'  }
 letVixShiny = function(vix) {
-  vix2shiny <<- vix
+  vix2shiny_ <<- vix
 
   shinyApp(ui = ui, server = server)
 

@@ -45,18 +45,18 @@ server <- function(input, output, session) {
     predicted <- reactive({
     if(input$addsmoother) {
       if(input$smoother=="ma") {
-        vix_smoother = ma(as.ts(vix2shiny$VIX),input$MovingAvg) 
+        vix_smoother = ma(as.ts(vix2shiny_$VIX),input$MovingAvg) 
         } else if(input$smoother=="smooth.spline") {
-          fit = fitVIX(vix2shiny,fit_type = "smooth.spline") 
-          vix_smoother = predict(fit$model,data.frame(x=seq(1:length(vix2shiny$VIX))))
+          fit = fitVIX(vix2shiny_,fit_type = "smooth.spline") 
+          vix_smoother = predict(fit$model,data.frame(x=seq(1:length(vix2shiny_$VIX))))
           vix_smoother = vix_smoother$y$x
           }else{  
-      fit = fitVIX(vix2shiny,fit_type = input$smoother) 
-      vix_smoother = predict(fit$model,data.frame(x=seq(1:length(vix2shiny$VIX))))
+      fit = fitVIX(vix2shiny_,fit_type = input$smoother) 
+      vix_smoother = predict(fit$model,data.frame(x=seq(1:length(vix2shiny_$VIX))))
       }
       }
-    else{vix_smoother= as.ts(vix2shiny$VIX)}
-    hw <- cbind("vix" = as.ts(vix2shiny$VIX), "smooth" = vix_smoother)
+    else{vix_smoother= as.ts(vix2shiny_$VIX)}
+    hw <- cbind("vix" = as.ts(vix2shiny_$VIX), "smooth" = vix_smoother)
     
   })
 
