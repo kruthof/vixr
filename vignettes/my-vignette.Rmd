@@ -7,21 +7,69 @@ vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
+  \usepackage[utf8]{inputenc}
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+---
+```{r, echo = FALSE}
+library(httr)
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
-The objective of the the vixr package is the replication of the volatility index (VIX). Thereby, it features four primary functions
-  vix_calc: This function takes as an input 
-  fitVIX
+The objective of the the vixr package is the replication of the volatility index (VIX) on a daily basis. Thereby, it features four primary functions
+
+* vix_calc(): Main function for calculating VIX quotes
+* fitVIX(): Function for applying basic statistical models on the calculated VIX quotes
+* letVixShiny(): Presentation of the calculated VIX quotes within a shiny app incl. basic statistical modes
+
 ```{r}
 library(vixr)
 SampleData <- data.frame('VIX' = runif(450, 9, 9.7))
 fitVIX(SampleData, fit_type = 'smooth.spline')
+```
 
-```{r}
+## Volatility Index: Overview
+
+The VIX is one of the premier benchmarks for (US) market volatility. Based on the S&P 500 Index, the volatility is estimated by aggregating the weighted prices pf S&P 500 calls and puts over a range of strike prices. 
+
+### Calculating the VIX
+In contrast to other indixes, VIX is comprised of options rather than stocks. Thereby, the price of each option is assumed to reflect the expaction of future volatility by market participants. 
+
+
+
+$$ VIX = 100 * \sigma \\ $$ 
+
+The VIX is composed of near- and next-term call and put options with more than 23 and less than 37 days to expiration. Thus the user has to define the near and the next term for calculating VIX quotes for a particular day.
+
+The generalized formular for VIX calculation is given by: 
+
+$$\\ \sigma^2 = \frac{2}{T}\sum_i \frac{\Delta K_i}{K_i^2}e^{RT} Q(K_i) - \frac{1}{T}\bigg[\frac{F}{K_0}-1\bigg]^2\\$$
+ 
+With
+
+* T = Time to expiration
+* F = Forward index level derived from index option prices
+* $K_0$ = First Strike below the forward inde level, F
+* $K_i$ = Strike price of ith out-of-the-money option; a call if $K_i>K_0$ and a put if $K_i<K_0$, both put and call if $K_i = K_0$
+* $\Delta K_i = \frac{K_{i+1}-K_{i-1}}{2}$ = Interval between strike prices - half the difference between the strike on either side of $K_i$
+* R = Risk-free interest rate to expiration
+* $Q(K_i)$ = Midpoint of the bis-ask spread for each option with strike $K_i$
+
+
+This calculation has to be done for the near- and the next term, resulting in $\sigma^2_1$ and $\sigma^2_2$.
+ 
+
+
+#### Calculating T
+$$T = {M_{Current-Day} + M_{Settlement-day} + M_{Other-days}} / {Minutes-in-a-year}$$
+
+With
+
+* $M_{Current-Day}$ = minutes remaining until midnight of the current day 
+* $M_{Settlement-day}$ = minutes from midnight until 8:30 a.m for standard SPX expirations
+* $M_{Other-days}$ = minutes remaining until midnight of the current day
+
+
+These calculations have to be done for the near-Term and the next-term options, i.e. you will have $T_1$ and $T_2$.
+
+
+The goal of this document is to get you up and running with httr as quickly as possible. httr is designed to map closely to the underlying http protocol. I'll try and explain the basics in this intro, but I'd also recommend "[HTTP: The Protocol Every Web Developer Must Know][http-tutorial]" or "[HTTP made really easy](http://www.jmarshall.com/easy/http/)".
