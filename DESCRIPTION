@@ -1,8 +1,8 @@
 Package: vixr
 Type: Package
 Title: Replication of intrada VIX quotes
-Version: 0.1.0
-Authors@R: person("Garvin","Kruthof", email = "garvin.krutof@ucdconnect.ie", role =
+Version: 1.0.0
+Authors@R: person("Garvin","Kruthof", email = "garvin.kruthof@ucdconnect.ie", role =
     c("aut", "cre"))
 Description: Repllication of the intraday volatility index using S&P 500 option and spot prices.
 License: GPL (>= 2)
