@@ -1,0 +1,128 @@
+---
+title: "vixr Package"
+author: "Garvin Kruthof"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+  
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The objective of the the vixr package is the replication of the volatility index (VIX) on a daily basis. Thereby, it features four primary functions
+
+* vix_calc: Main function for calculating VIX quotes
+* fitVIX: Function for applying basic statistical models on the calculated VIX quotes
+* letVixShiny: Presentation of the calculated VIX quotes within a shiny app incl. basic statistical models
+* plotvix: Vizualize the calculated VIX quotes using ggplot2
+
+
+## Volatility Index: Overview
+
+The VIX is one of the premier benchmarks for (US) market volatility. Based on the S&P 500 Index, the volatility is estimated by aggregating the weighted prices of S&P 500 calls and puts over a range of strike prices. 
+
+### Calculating the VIX
+In contrast to other indixes, VIX is comprised of options rather than stocks. Thereby, the price of each option is assumed to reflect the expaction of future volatility by market participants. 
+
+The VIX is composed of near- and next-term call and put options with more than 23 and less than 37 days to expiration. Thus the user has to define the near and the next term for calculating VIX quotes for a particular day.
+
+The formular for calculating the VIX is given by
+
+$$VIX = 100 \sqrt{\bigg\{ T_1 \sigma_1^2\bigg[\frac{N_{T_2}-N_{30} }{N_{T_2}-N_{T_1}}\bigg] 
++ T_2 \sigma_2^2\bigg[\frac{N_{30}-N_{T_1} }{N_{T_2}-N_{T_1}}\bigg]  \bigg\} \frac{N_{365}}{N_{30}}} $$
+
+
+
+
+With
+
+* $N_{T_1}$ = Number of minutes to settlement of the near-term option
+* $N_{T_2}$ = Number of minutes to settlement of the next-term option
+* $N_{30}$ = Number of minutes in 30 days (43,200)
+* $N_{365}$ = Number of minutes in 365 days (525,600)
+
+
+
+#### Calculating T
+$$T = {M_{Current-Day} + M_{Settlement-day} + M_{Other-days}} / {\text{Minutes in a year}}$$
+
+With
+
+* $M_{Current-Day}$ = minutes remaining until midnight of the current day 
+* $M_{Settlement-day}$ = minutes from midnight until 8:30 a.m for standard SPX expirations
+* $M_{Other-days}$ = minutes remaining until midnight of the current day
+
+
+These calculations have to be done for the near-Term and the next-term options, i.e. you will have $T_1$ and $T_2$.
+
+#### Calculating F
+
+The forward index level F can be calculated as follows
+$$F_1 = \text{Strike Price} + e^{RT} (\text{Call Price - Put Price}) $$
+
+
+#### Calculating Sigma
+
+$$\\ \sigma^2 = \frac{2}{T}\sum_i \frac{\Delta K_i}{K_i^2}e^{RT} Q(K_i) - \frac{1}{T}\bigg[\frac{F}{K_0}-1\bigg]^2\\$$
+ 
+With
+
+* T = Time to expiration
+* F = Forward index level derived from index option prices
+* $K_0$ = First Strike below the forward index level, F
+* $K_i$ = Strike price of ith out-of-the-money option; a call if $K_i>K_0$ and a put if $K_i<K_0$, both put and call if $K_i = K_0$
+* $\Delta K_i = \frac{K_{i+1}-K_{i-1}}{2}$ = Interval between strike prices - half the difference between the strike on either side of $K_i$
+* R = Risk-free interest rate to expiration
+* $Q(K_i)$ = Midpoint of the bis-ask spread for each option with strike $K_i$
+
+
+This calculation has to be done for the near- and the next term, resulting in $\sigma^2_1$ and $\sigma^2_2$.
+ 
+
+For more detailed desciption of the procdure, see the "[CBOE White Paper](https://www.cboe.com/micro/vix/vixwhite.pdf)".
+
+## Examples
+
+The vix_cal() function calculates the VIX quotes. The function takes as an input a data frame featuring option quotes of one particular day with various expiration dates. It requires to set the near- and next term. Furthermore, you can specific the risk free rate for the two time intervals. Compare the function documentation for a detailed list of column naming. 
+
+```{r}
+library(vixr)
+
+#Package includes a sample dataset
+data("VIX_SampleData")
+
+#calculating the VIX 
+vix = vix_calc(VIX_SampleData,nearT=28,nextT=35, rf_near = 0.002, rf_next = 0.002)
+```
+
+
+The plotvix() function provides a clean plot of the VIX quotes for the particular day in minutes, using ggplot2. It also allows to include smoother functions
+
+```{r}
+#Ploting VIX quotes
+plotvix(vix, smoother="loess", type='l')
+```
+
+
+The fitVIX function applies basic statistical models on the VIX quotes (linear regression ['lm'], loess ['loess'], smoothing spline ['smooth.spline]).
+
+```{r}
+#Fitting a smoothing spline model
+fitVIX(vix,fit_type = "smooth.spline")
+```
+
+Finally, the package features a shiny app that allows you to interactively visualize the calculated vix quotes. You can include various smoothing functions to the data and features a zooming functionality. 
+
+```{r}
+#Starting Shiny app
+#letVixShiny(vix)
+```
+
